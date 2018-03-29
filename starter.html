@@ -23,6 +23,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="dist/css/fastgrid.css">
+  <link rel="stylesheet" href="https://hornet.com/assets/hornet-ce01084b9889efda847009f70f51c206.css">
   
   <meta name="defaultLanguage" content="en-US">
   <meta name="availableLanguages" content="en-US, ru-RU">
@@ -64,7 +66,7 @@ desired effect
   <div class="pace-progress-inner"></div>
 </div>
 <div class="pace-activity"></div></div>
-<div id="member-profile" style="display: block" class="wrapper">
+<div id="member-profile" style="display: none" class="wrapper">
 
   <!-- Main Header -->
   <header class="main-header">
@@ -91,29 +93,14 @@ desired effect
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success" id="unreaded-messaged">72</span>
+              <span class="label label-success" id="unreaded-messages">72</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header" data-l10n-id="unreaded-messages">You have 72 messages</li>
+              <li class="header" data-l10n-id="unreaded-messages">You have new messages</li>
               <li>
                 <!-- inner menu: contains the messages -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <!-- User Image -->
-                        <img id="member-av" src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <!-- Message title and timestamp -->
-                      <h4>
-                        Hornet Guy
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <!-- The message -->
-                      <p>Why not try a new awesome web client?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
+                <ul class="menu" id="short-chat">
+                  
                 </ul>
                 <!-- /.menu -->
               </li>
@@ -294,28 +281,25 @@ desired effect
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block" data-l10n-id="profile-follow-button"><b>Follow</b></a>
+              <a href="#" class="btn btn-primary btn-block" disabled data-l10n-id="profile-follow-button"><b>Follow</b></a>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
           <!-- About Me Box -->
-          <div class="box box-primary">
+          <div id="aboutblock" class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">About Me</h3>
+              <h3 class="box-title" data-l10n-id="profile-about-me">About Me</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+              <strong><i class="fa fa-book margin-r-5"></i> <cap data-l10n-id="profile-my-info">My info</cap></strong>
 
               <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
+                $about_you
               </p>
-
-              <hr>
-
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+              <strong><i class="fa fa-sort-amount-asc" style="transform: rotate(180deg)"></i> <cap data-l10n-id="profile-height"></cap></strong> <cap class="text-muted margin-r-5">$height</cap>  <strong><i class="fa fa-male"></i> <cap data-l10n-id="profile-weight"></cap></strong> <cap class="text-muted margin-r-5">$weight</cap>
 
               <p class="text-muted">Malibu, California</p>
 
@@ -340,131 +324,138 @@ desired effect
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+		  <!-- Recent chats box-->
+		  <div class="box box-danger">
+                <div class="box-header with-border">
+                  <h3 class="box-title" data-l10n-id="profile-latest-chats">Latest chats</h3>
+
+                  <div class="box-tools pull-right">
+                    <span class="label label-danger" data-l10n-id="recent-chats-new-messages">8 New Messages</span>
+                  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding" style="">
+                  <ul class="users-list clearfix">
+				  
+                  </ul>
+                  <!-- /.users-list -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center" style="">
+                  <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                </div>
+                <!-- /.box-footer -->
+              </div>
+		  <!-- /.recent.chats.box -->
+		  <div class="box box-warning direct-chat direct-chat-warning floating">
+            <div class="box-header with-border">
+              <h3 class="box-title">Direct Chat</h3>
+
+              <div class="box-tools pull-right">
+                <span data-toggle="tooltip" title="" class="badge bg-yellow" data-original-title="3 New Messages">3</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
+                  <i class="fa fa-comments"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- Conversations are loaded here -->
+              <div class="direct-chat-messages">
+                <!-- Message. Default to the left -->
+                <div class="direct-chat-msg">
+                  <div class="direct-chat-info clearfix">
+                    <span class="direct-chat-name pull-left">Alexander Pierce</span>
+                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                  </div>
+                  <!-- /.direct-chat-info -->
+                  <img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+                  <div class="direct-chat-text">
+                    Is this template really for free? That's unbelievable!
+                  </div>
+                  <!-- /.direct-chat-text -->
+                </div>
+                <!-- /.direct-chat-msg -->
+
+                <!-- Message to the right -->
+                <div class="direct-chat-msg right">
+                  <div class="direct-chat-info clearfix">
+                    <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                    <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                  </div>
+                  <!-- /.direct-chat-info -->
+                  <img class="direct-chat-img" src="../dist/img/user3-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+                  <div class="direct-chat-text">
+                    You better believe it!
+                  </div>
+                  <!-- /.direct-chat-text -->
+                </div>
+                <!-- /.direct-chat-msg -->
+              </div>
+              <!--/.direct-chat-messages-->
+
+              <!-- Contacts are loaded here -->
+              <div class="direct-chat-contacts">
+                <ul class="contacts-list">
+                  <li>
+                    <a href="#">
+                      <img class="contacts-list-img" src="../dist/img/user1-128x128.jpg" alt="User Image">
+
+                      <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                        <span class="contacts-list-msg">How have you been? I was...</span>
+                      </div>
+                      <!-- /.contacts-list-info -->
+                    </a>
+                  </li>
+                  <!-- End Contact Item -->
+                </ul>
+                <!-- /.contatcts-list -->
+              </div>
+              <!-- /.direct-chat-pane -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <form action="#" method="post">
+                <div class="input-group">
+                  <input name="message" placeholder="Type Message ..." class="form-control" type="text">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-warning btn-flat">Send</button>
+                      </span>
+                </div>
+              </form>
+            </div>
+            <!-- /.box-footer-->
+          </div>
+		  <!--/.dialog.box-->
         </div>
         <!-- /.col -->
         <div class="col-md-9">
           <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab" data-l10n-id="profile-activity">Activity</a></li>
+            <ul class="nav nav-tabs" id="navtabs">
+              <li class="active"><a id="profile-activity" href="#activity" data-toggle="tab" data-l10n-id="profile-activity">Activity</a></li>
+              <li><a id="nearby-tab" href="#nearby" data-toggle="tab" data-l10n-id="profile-nearby">Nearby</a></li>
               <li><a href="#timeline" data-toggle="tab" data-l10n-id="profile-timeline">Timeline</a></li>
               <li><a href="#settings" data-toggle="tab" data-l10n-id="profile-settings">Settings</a></li>
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-
-                  <form class="form-horizontal">
-                    <div class="form-group margin-bottom-none">
-                      <div class="col-sm-9">
-                        <input class="form-control input-sm" placeholder="Response">
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Posted 5 photos - 5 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <div class="row margin-bottom">
-                    <div class="col-sm-6">
-                      <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="../../dist/img/photo2.png" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="../../dist/img/photo3.jpg" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="../../dist/img/photo4.jpg" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
+					<div class="members-grid">
+						<!-- Members -->
+					</div>
               </div>
               <!-- /.tab-pane -->
+			  <div class="tab-pane" id="nearby">
+			  <p><div class="btn-group"><button id="osmmap" class="btn-xs btn"><cap data-l10n-id="map-display">Display map</cap></button><button id="grid_decrease" class="btn btn-xs btn-flat"><i class="fa fa-minus"></i> <cap data-l10n-id="grid-small">Small grid</cap></button><button id="grid_increase" class="btn btn-xs btn-flat"><i class="fa fa-plus"></i> <cap data-l10n-id="grid-big">Big grid</cap></button></div></p>
+					<div class="members-grid-near">
+						<!-- Members -->
+					</div>
+              </div>
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
@@ -475,68 +466,6 @@ desired effect
                         </span>
                   </li>
                   <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-envelope bg-blue"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                      <div class="timeline-body">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                        quora plaxo ideeli hulu weebly balihoo...
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-primary btn-xs">Read more</a>
-                        <a class="btn btn-danger btn-xs">Delete</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-user bg-aqua"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                      <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                      </h3>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-comments bg-yellow"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                      <div class="timeline-body">
-                        Take me to your leader!
-                        Switzerland is small and neutral!
-                        We are more like Germany, ambitious and misunderstood!
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
                   <li>
                     <i class="fa fa-camera bg-purple"></i>
 
@@ -554,9 +483,6 @@ desired effect
                     </div>
                   </li>
                   <!-- END timeline item -->
-                  <li>
-                    <i class="fa fa-clock-o bg-gray"></i>
-                  </li>
                 </ul>
               </div>
               <!-- /.tab-pane -->
@@ -734,6 +660,10 @@ desired effect
 <script defer src="dist/js/l20n.js"></script>
 <script src="dist/js/krio.js"></script>
 <script src="dist/js/apiv3.hornet.js"></script>
+<script src="dist/js/timeago.min.js"></script>
+<script src="dist/js/osm.js"></script>
+<script src="dist/js/geo.js"></script>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
@@ -748,7 +678,10 @@ desired effect
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg" data-l10n-id="login-help-tip">Sign in to start your session</p>
-
+	<div class="alert alert-danger alert-dismissible" style="display: none;" id="Login_infobox">
+                <button type="button" class="close" onclick="$('#Login_infobox').css('display','none')" aria-hidden="true">×</button><i class="icon fa fa-ban"></i>
+                <error></error>
+              </div>
     <form  method="post">
       <div class="form-group has-feedback">
         <input type="email" id="email" class="form-control" placeholder="Email">
@@ -831,6 +764,249 @@ desired effect
   </div>
 </div>
 <!--/how.to.reg.MODAL-->
+<!-- Modal -->
+<div class="modal fade modal-alert" id="alertmodal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" data-l10n-id="error-modal-title"></h4>
+      </div>
+      <div class="modal-body" id="alertmodal_text">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<a href="#" id="drawalert" data-toggle="modal" data-target="#alertmodal"></a>
+<!--/how.to.reg.MODAL-->
+<!-- Profile modal -->
+<div class="modal fade member-profile-modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-lg" role="document" style="max-wigth: 750px;" >
+	<div class="modal-content">
+		<div class="modal-body">
+			<div class="container-fluid">
+	<div id="ember6729" class="modal-social-profile ember-view"><div class="modal-social-profile__header">
+  <img src="//hornetnetworks-a.akamaihd.net/uploads/photos/6rdxt/thumbnail_retina_72396670-4c08-4179-b544-fcc597f97aaf.jpg" alt="Profile photo" class="modal-social-profile__avatar">
+
+  <div class="modal-social-profile__heading">
+    <h1 class="modal-social-profile__name">
+      Den,
+        23
+    </h1>
+    <h2 class="modal-social-profile__distance">
+      @5pfxa
+    </h2>
+  </div>
+
+<button type="button" tabindex="0" id="ember6734" class="modal-social-profile__close-profile md-default-theme md-button md-icon-button ember-view md-ink-ripple">      <md-icon md-font-icon="close" aria-label="close" id="ember6735" class="paper-icon md-font material-icons md-default-theme ember-view">close</md-icon>
+
+<div class="md-ripple-container"></div></button></div>
+
+<div class="layout-column layout-gt-xs-row">
+
+  <div class="modal-social-profile__gallery flex flex-gt-xs-66">
+    <div class="modal-social-profile__gallery-main-photo-wrapper">
+
+      <img alt="Profile photo" src="//hornetnetworks-a.akamaihd.net/uploads/photos/6rdxt/square_retina_72396670-4c08-4179-b544-fcc597f97aaf.jpg" class="js-modal-social-profile-photo modal-social-profile__gallery-main-photo">
+
+
+<!---->
+          <span class="modal-social-profile__gallery-main-photo-right" data-ember-action="" data-ember-action-6740="6740">
+            <md-icon md-font-icon="keyboard arrow right" style="height: 32px; min-height: 32px; min-width: 32px; font-size: 32px; line-height: 32px;" aria-label="keyboard arrow right" id="ember6741" class="paper-icon md-font material-icons md-default-theme ember-view">keyboard_arrow_right</md-icon>
+          </span>
+
+    </div>
+      <ul class="modal-social-profile__thumbnails">
+          <li>
+<!---->
+            <img src="//hornetnetworks-a.akamaihd.net/uploads/photos/6rdxt/thumbnail_noretina_72396670-4c08-4179-b544-fcc597f97aaf.jpg" alt="Public Photo" class="modal-social-profile__gallery-thumbnail" data-ember-action="" data-ember-action-6747="6747">
+          </li>
+          <li>
+<!---->
+            <img src="//hornetnetworks-a.akamaihd.net/uploads/photos/6rdxt/thumbnail_noretina_0973488e-56f4-43d9-a67f-42a4a3d055af.jpg" alt="Public Photo" class="modal-social-profile__gallery-thumbnail" data-ember-action="" data-ember-action-6753="6753">
+          </li>
+          <li>
+<!---->
+            <img src="//hornetnetworks-a.akamaihd.net/uploads/photos/6rdxt/thumbnail_noretina_06093a1a-caf0-4e59-9f9e-3cc4fd9a7bb1.jpg" alt="Public Photo" class="modal-social-profile__gallery-thumbnail" data-ember-action="" data-ember-action-6759="6759">
+          </li>
+
+          <li>
+<div id="ember6764" class="ember-view"><md-menu aria-owns="ember-basic-dropdown-content-ember6765" tabindex="-1" data-ebd-id="ember6765-trigger" role="button" id="ember6766" class="ember-basic-dropdown-trigger ember-view">                  <span class="modal-social-profile__gallery-private">
+                <md-icon md-font-icon="lock" style="height: 36px; min-height: 36px; min-width: 36px; font-size: 36px; line-height: 36px;" aria-label="lock" id="ember6767" class="modal-social-profile__gallery-private-icon paper-icon md-font material-icons md-default-theme ember-view">lock</md-icon>
+              </span>
+
+</md-menu>
+<!---->
+
+</div>          </li>
+          <li>
+<div id="ember6773" class="ember-view"><md-menu aria-owns="ember-basic-dropdown-content-ember6774" tabindex="-1" data-ebd-id="ember6774-trigger" role="button" id="ember6775" class="ember-basic-dropdown-trigger ember-view">                  <span class="modal-social-profile__gallery-private">
+                <md-icon md-font-icon="lock" style="height: 36px; min-height: 36px; min-width: 36px; font-size: 36px; line-height: 36px;" aria-label="lock" id="ember6776" class="modal-social-profile__gallery-private-icon paper-icon md-font material-icons md-default-theme ember-view">lock</md-icon>
+              </span>
+
+</md-menu>
+<!---->
+
+</div>          </li>
+          <li>
+<div id="ember6782" class="ember-view"><md-menu aria-owns="ember-basic-dropdown-content-ember6783" tabindex="-1" data-ebd-id="ember6783-trigger" role="button" id="ember6784" class="ember-basic-dropdown-trigger ember-view">                  <span class="modal-social-profile__gallery-private">
+                <md-icon md-font-icon="lock" style="height: 36px; min-height: 36px; min-width: 36px; font-size: 36px; line-height: 36px;" aria-label="lock" id="ember6785" class="modal-social-profile__gallery-private-icon paper-icon md-font material-icons md-default-theme ember-view">lock</md-icon>
+              </span>
+
+</md-menu>
+<!---->
+
+</div>          </li>
+      </ul>
+  </div>
+
+  <div class="modal-social-profile__info flex">
+    <h3 class="modal-social-profile__headline">
+      <div id="ember6787" class="user-last-online ember-view"><span class="user-last-online__icon"></span>
+Online
+
+  43 minutes ago
+</div>
+    </h3>
+
+      <h3 class="modal-social-profile__headline">Свободен. Знакомлююсь;)</h3>
+
+      <p class="modal-social-profile__description js-modal-social-profile-about-you">
+        Высокий, симп., интересный. Знакомлюсь с интересными людьми. Общение, дружба. | Если секс, то симп. стройные до 22х | Фото мои!
+      </p>
+
+<!---->
+      <div class="hide-xs">
+        <md-divider id="ember6792" class="modal-social-profile__info-divider paper-divider md-default-theme ember-view"></md-divider>
+
+        <div id="ember6793" class="ember-view">
+<md-card id="ember6794" class="profile-about-card profile-about-card--cardless profile-about-card--no-heading ember-view">    <h3 class="profile-about-card__heading">
+      About
+    </h3>
+
+<md-card-content id="ember6799" class="layout-column ember-view">      <ul class="profile-about-card__info-list">
+        <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+          <md-icon md-font-icon="person" style="height: 16px; min-height: 16px; min-width: 16px; font-size: 16px; line-height: 16px;" aria-label="person" id="ember6800" class="profile-about-card__info-icon paper-icon md-font material-icons md-default-theme ember-view">person</md-icon>
+          <span>White, 183 cm, 70 kg, Vers-Top</span>
+        </li>
+
+<!---->
+          <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+            <md-icon md-font-icon="search" style="height: 16px; min-height: 16px; min-width: 16px; font-size: 16px; line-height: 16px;" aria-label="search" id="ember6801" class="profile-about-card__info-icon paper-icon md-font material-icons md-default-theme ember-view">search</md-icon>
+            <span>Relationships, Networking, Friends, Dates, Chat</span>
+          </li>
+
+          <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+            <md-icon md-font-icon="favorite" style="height: 16px; min-height: 16px; min-width: 16px; font-size: 16px; line-height: 16px;" aria-label="favorite" id="ember6802" class="profile-about-card__info-icon paper-icon md-font material-icons md-default-theme ember-view">favorite</md-icon>
+            <span>Single</span>
+          </li>
+
+          <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+            <img src="/assets/images/icons/ribbon_grey-df54d7e7801a26ebc01ceaca99b77c36.png" class="profile-about-card__info-icon profile-about-card__ribbon">
+            <span>
+              Negative
+
+              <span style="cursor: pointer;" data-ember-action="" data-ember-action-6803="6803">
+                <md-icon md-font-icon="help" style="height: 15px; min-height: 15px; min-width: 15px; font-size: 15px; line-height: 15px;" aria-label="help" id="ember6804" class="paper-icon md-font material-icons md-default-theme ember-view">help</md-icon>
+              </span>
+            </span>
+          </li>
+      </ul>
+
+</md-card-content></md-card>
+  <div id="ember6805" class="ember-view"><!----></div>
+
+</div>
+      </div>
+
+    <div class="modal-social-profile__buttons">
+<button type="button" tabindex="0" id="ember6806" class="modal-social-profile__cta-button md-default-theme md-button ember-view md-ink-ripple">          Chat
+
+<div class="md-ripple-container"></div></button>
+<button type="button" tabindex="0" id="ember6811" class="modal-social-profile__cta-button md-default-theme md-button ember-view md-ink-ripple">          Follow
+
+<div class="md-ripple-container"></div></button>    </div>
+
+      <div class="hide show-xs">
+        <md-divider id="ember6816" class="modal-social-profile__info-divider paper-divider md-default-theme ember-view"></md-divider>
+
+        <div id="ember6817" class="ember-view">
+<md-card id="ember6818" class="profile-about-card profile-about-card--cardless profile-about-card--no-heading ember-view">    <h3 class="profile-about-card__heading">
+      About
+    </h3>
+
+<md-card-content id="ember6823" class="layout-column ember-view">      <ul class="profile-about-card__info-list">
+        <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+          <md-icon md-font-icon="person" style="height: 16px; min-height: 16px; min-width: 16px; font-size: 16px; line-height: 16px;" aria-label="person" id="ember6824" class="profile-about-card__info-icon paper-icon md-font material-icons md-default-theme ember-view">person</md-icon>
+          <span>White, 183 cm, 70 kg, Vers-Top</span>
+        </li>
+
+<!---->
+          <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+            <md-icon md-font-icon="search" style="height: 16px; min-height: 16px; min-width: 16px; font-size: 16px; line-height: 16px;" aria-label="search" id="ember6825" class="profile-about-card__info-icon paper-icon md-font material-icons md-default-theme ember-view">search</md-icon>
+            <span>Relationships, Networking, Friends, Dates, Chat</span>
+          </li>
+
+          <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+            <md-icon md-font-icon="favorite" style="height: 16px; min-height: 16px; min-width: 16px; font-size: 16px; line-height: 16px;" aria-label="favorite" id="ember6826" class="profile-about-card__info-icon paper-icon md-font material-icons md-default-theme ember-view">favorite</md-icon>
+            <span>Single</span>
+          </li>
+
+          <li class="profile-about-card__info-list-item layout-row layout-align-start-start">
+            <img src="/assets/images/icons/ribbon_grey-df54d7e7801a26ebc01ceaca99b77c36.png" class="profile-about-card__info-icon profile-about-card__ribbon">
+            <span>
+              Negative
+
+              <span style="cursor: pointer;" data-ember-action="" data-ember-action-6827="6827">
+                <md-icon md-font-icon="help" style="height: 15px; min-height: 15px; min-width: 15px; font-size: 15px; line-height: 15px;" aria-label="help" id="ember6828" class="paper-icon md-font material-icons md-default-theme ember-view">help</md-icon>
+              </span>
+            </span>
+          </li>
+      </ul>
+
+</md-card-content></md-card>
+  <div id="ember6829" class="ember-view"><!----></div>
+
+</div>
+      </div>
+
+  </div>
+</div>
+
+<div class="modal-social-profile__go-to-full-profile" data-ember-action="" data-ember-action-6830="6830">
+  View Full Profile
+</div></div>
+</div>
+			</div>
+		</div>
+  </div>
+</div>
+</div>
+<!--/.profile.modal-->
+<!-- OSM modal -->
+<div class="modal fade osm" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-lg" role="document" style="wigth: 75%;" >
+    <div class="modal-content">
+	<div class="modal-body">
+	<div class="container-fluid" id="OSMap" style="height:800px">
+	<!-- OpenStreetMap container -->
+	</div>
+	</div>
+  </div>
+</div>
+</div>
+<!--/.profile.modal-->
+<!--Loading splash-->
+<div class="container text-center load" style="display:none">
+  	<img src="dist/img/loading.svg" id="loading">
+</div>
+<!--/loading.splash-->
+<!-- Dialog box -->
+
 <!-- iCheck -->
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script>

@@ -194,26 +194,108 @@ function hrntAuthentificateajax(){
 		data:"session%5Bid%5D="+email+"&session%5Bprovider%5D=Hornet&session%5Bsecret%5D="+secret,
 		dataType:"JSON",
 		success: function(xhr){
-			if(xhr){
 				$.cookie("access_token", xhr.session.access_token);
 				$.cookie("profile_id", xhr.session.profile.id);
-				hrntLoadAccountajax(xhr.session.profile.id);
-			}
+				localStorage.access_token = xhr.session.access_token;
+				hrntLoadAccountajax(xhr);
+			},
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+			if(XMLHttpRequest.status == 404) hrntThrowError("authentification");
+			$("#submit-signin-btn").toggle("disabled");
 		}
 	});
 }
 
-function hrntLoadAccountajax(id){
+function hrntSessionajax(){
 	$.ajax({
-		url:"https://gethornet.com/api/v3/members/"+id+".json",
+		url:"https://gethornet.com/api/v3/session.json",
+		type:"GET",
+		dataType:"JSON",
+		beforeSend: function(xhr){xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));},
+		success: function(xhr){
+			localStorage.session = JSON.stringify(xhr.session);
+			hrntLoadAccountajax(xhr);
+		}
+	});
+}
+
+function hrntLoadAccountajax(hrnt_session){
+	$.ajax({
+		url:"https://gethornet.com/api/v3/members/"+$.cookie("profile_id")+".json",
 		type:"GET",
 		dataType:"json",
 		beforeSend: function(xhr) {
                  xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));
             },
 		success: function(xhr){
-			if(xhr) renderSelfProfile(xhr);
+			localStorage.profile = JSON.stringify(xhr.member);
+			if(xhr) renderSelfProfile(xhr, hrnt_session);
 		}
 	});
 }
-		
+
+function hrntLoadConversationsajax(per_page = 10, success){
+	$.ajax({
+		url:"https://hornet.com/api/v3/messages/conversations.json?per_page="+per_page,
+		type:"GET",
+		dataType:"json",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));
+		},
+		success: success
+	});
+}
+
+function hrntLoadActivitiesajax(success){
+	$.ajax({
+		url:"https://hornet.com/api/v3/feeds/notifications",
+		type:"GET",
+		dataType:"json",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));
+		},
+		success: success
+	});
+}
+
+function hrntLoadNewGuysajax(page=1, perpage=50,success){
+	$.ajax({
+		url:"https://hornet.com/api/v3/members/recent.json?page="+page+"&per_page="+perpage,
+		type:"GET",
+		dataType:"json",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));
+		},
+		success: success
+	});
+} 
+
+function hrntLoadNearGuysajax(page=1, perpage=50, success){
+	//console.log(coords);
+	/*if(coords != null){
+		var uri = "https://hornet.com/api/v3/members/explore.json?lat="+coords[0]+"&lng="+coords[1]+"&page="+page+"&per_page="+perpage;
+	}else
+		*/var uri = "https://hornet.com/api/v3/members/near.json?page="+page+"&per_page="+perpage;
+	
+	$.ajax({
+		url:uri,
+		type:"GET",
+		dataType:"json",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));
+		},
+		success: success
+	});
+} 
+
+function hrntLoadMemberProfileajax(id, success){
+	$.ajax({
+		url:"https://gethornet.com/api/v3/members/"+id+".json",
+		type:"GET",
+		dataType:"json",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Authorization", "Hornet "+$.cookie("access_token"));
+		},
+		success: success
+	});
+}

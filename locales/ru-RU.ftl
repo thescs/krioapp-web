@@ -14,14 +14,24 @@ header-label = Разделы
 bottom-right-text = Krio является неофициальным клиентом для сервиса интернет-знакомств Hornet &reg;
 bottom-left-text = Krioapp 1.0jw 2018
 close-btn = Закрыть
+grid-small = Маленькие иконки
+grid-big = Большие иконки
+map-display = Карта
 
 profile-content-header = Профиль
 profile-followers-label = Подписчики
 profile-following-label = Избранные
-profile-follow-button = Следовать
-profile-activity = Активность
+profile-follow-button = Редактировать профиль
+profile-activity = Новые парни
 profile-timeline = Таймлайн
 profile-settings = Настройки
+profile-nearby = Парни поблизости
+profile-latest-chats = Недавние чаты
+profile-about-me = Мой профиль
+recent-chats-new-messages = новых сообщений
+profile-my-info = Обо мне
+profile-height = Рост
+profile-weight = Вес
 
 sidebar-my-profile = Мой профиль
 sidebar-nearby-guys = Парни поблизости
@@ -40,3 +50,12 @@ login-howlogin-text =
 login-howreg-text =
 	| TODO: write instruction.
 login-howto = Инструкции
+
+error-wrong-emailpass = E-mail или пароль не распознаны
+error-modal-title = Упс.. Что-то пошло не так...
+
+activity-like = оценил
+activity-like-photo = твоё фото
+activity-like-hashtag = твой хэштег
+activity-like-profile = твой профиль
+activity-following = подписался на твою страницу
