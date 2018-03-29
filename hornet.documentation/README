@@ -1,0 +1,6 @@
+This file contains description for all files and folders in that directory
+
+Folders
+	- raw sources and data
+		- HornetApiService.java 
+			*** This file contains all methods and types who communicates with API used by Hornet v4.2.0-2
